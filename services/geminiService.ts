@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Modality, Type } from "@google/genai";
 import { ChatMessage, ChatRole } from "../types";
 
@@ -118,7 +119,9 @@ export const generateProImage = async (
     aspectRatio: "1:1" | "3:4" | "4:3" | "9:16" | "16:9",
     imageSize: "1K" | "2K" | "4K" = "1K"
 ) => {
-    const client = getClient();
+    // Use fresh client to ensure we get the latest selected API key
+    const client = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    
     const response = await client.models.generateContent({
         model: 'gemini-3-pro-image-preview',
         contents: {

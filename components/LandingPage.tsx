@@ -46,10 +46,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
   }, []);
 
   const navLinks = [
-    { name: 'Vision', href: '#vision' },
+    { name: 'Vision', action: () => onNavigate('vision') },
     { name: 'Governance', action: () => onNavigate('dao') },
     { name: 'Studio', action: () => onNavigate('genesis') },
-    { name: 'Product', href: '#product' },
+    { name: 'Product', action: () => onNavigate('product') },
   ];
 
   return (
@@ -79,7 +79,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
                         {link.name}
                     </button>
                 ) : (
-                    <a key={link.name} href={link.href} className="text-xs font-bold text-gray-400 hover:text-white transition-colors tracking-widest uppercase font-display">
+                    <a key={link.name} href="#" className="text-xs font-bold text-gray-400 hover:text-white transition-colors tracking-widest uppercase font-display">
                         {link.name}
                     </a>
                 )
@@ -125,7 +125,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
                         {link.name}
                     </button>
                 ) : (
-                    <a key={link.name} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-left text-gray-300 hover:text-movi-green uppercase">
+                    <a key={link.name} href="#" onClick={() => setMobileMenuOpen(false)} className="text-left text-gray-300 hover:text-movi-green uppercase">
                         {link.name}
                     </a>
                 )
@@ -134,47 +134,67 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden perspective-1000">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,241,149,0.1)_0%,transparent_60%)] opacity-50"></div>
+      {/* Hero Section with Interactive Projector Beam */}
+      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden perspective-1000 bg-black">
         
-        {/* 3D Spotlight Effect reacting to mouse */}
-        <div 
-            className="absolute w-[200vw] h-[200vh] bg-gradient-to-b from-movi-green/5 to-transparent pointer-events-none transition-transform duration-75 ease-out"
-            style={{ 
-                transform: `translate(${mousePos.x * -20}px, ${mousePos.y * -20}px) rotate(${mousePos.x * 2}deg)`,
-                opacity: 1 - scrollProgress
-            }}
-        ></div>
+        {/* Ambient Glow Layer */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(20,241,149,0.05)_0%,transparent_70%)] opacity-50"></div>
 
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto transform transition-transform duration-100" style={{ transform: `translate(${mousePos.x * 10}px, ${mousePos.y * 10}px)` }}>
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-white/10 rounded-full bg-white/5 backdrop-blur-md animate-fade-in-up">
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-xs font-bold uppercase tracking-widest text-gray-300">Recording Protocol Active</span>
+        {/* --- DYNAMIC PROJECTOR BEAM SYSTEM --- */}
+        <div 
+            className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[150vw] h-[150vh] pointer-events-none z-0 transition-transform duration-100 ease-out origin-top"
+            style={{ 
+                transform: `translateX(-50%) rotate(${mousePos.x * 4}deg) scale(${1 + scrollProgress * 0.2})`,
+                opacity: Math.max(0, 1 - scrollProgress * 1.5)
+            }}
+        >
+             {/* 1. The Core Beam (Cone of light) */}
+             <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-movi-green/5 to-transparent" 
+                  style={{ clipPath: 'polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%)', filter: 'blur(20px)' }}>
+             </div>
+             
+             {/* 2. The Flicker Overlay (Simulates old bulb) */}
+             <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent animate-flicker mix-blend-overlay"
+                   style={{ clipPath: 'polygon(42% 0%, 58% 0%, 90% 100%, 10% 100%)' }}>
+             </div>
+
+             {/* 3. Dust Particles Layer (Floating specs in the beam) */}
+             <div className="absolute inset-0 overflow-hidden" style={{ clipPath: 'polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%)' }}>
+                 <div className="dust-layer animate-dust-float"></div>
+                 <div className="dust-layer-2 animate-dust-float-slow"></div>
+             </div>
+
+             {/* 4. God Rays / Sharp Beams */}
+             <div className="absolute inset-0 bg-[conic-gradient(from_180deg_at_50%_-10%,transparent_45%,rgba(255,255,255,0.03)_48%,rgba(255,255,255,0.08)_50%,rgba(255,255,255,0.03)_52%,transparent_55%)] animate-beam-swing"></div>
+        </div>
+
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto transform transition-transform duration-100" style={{ transform: `translate(${mousePos.x * 15}px, ${mousePos.y * 15}px)` }}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-white/10 rounded-full bg-white/5 backdrop-blur-md animate-fade-in-up shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_#ef4444]"></div>
+                <span className="text-xs font-bold uppercase tracking-widest text-gray-300 font-script">Recording Protocol Active</span>
             </div>
             
-            <h1 className="text-6xl md:text-9xl font-display font-bold tracking-tighter mb-6 leading-[0.85] uppercase mix-blend-difference">
+            <h1 className="text-6xl md:text-9xl font-display font-bold tracking-tighter mb-6 leading-[0.85] uppercase mix-blend-difference drop-shadow-2xl">
                 <span className="block animate-reveal-text">Decentralized</span>
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500 animate-reveal-text delay-100">Cinema</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-400 font-light max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200">
-                "Don't just watch the story. <span className="text-white font-medium">Own it. Remix it. Profit from it.</span>" <br/>
+            <p className="text-xl md:text-2xl text-gray-400 font-light max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200 drop-shadow-lg">
+                "Don't just watch the story. <span className="text-white font-medium border-b border-movi-green/50">Own it. Remix it. Profit from it.</span>" <br/>
                 The world's first DAO-governed Hollywood studio.
             </p>
 
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center animate-fade-in-up delay-300">
                 <button 
                     onClick={() => onNavigate('genesis')}
-                    className="px-8 py-4 bg-movi-green hover:bg-white text-black font-bold text-lg uppercase tracking-widest transition-all hover:scale-105 shadow-[0_0_20px_rgba(20,241,149,0.4)]"
+                    className="px-8 py-4 bg-movi-green hover:bg-white text-black font-bold text-lg uppercase tracking-widest transition-all hover:scale-105 shadow-[0_0_20px_rgba(20,241,149,0.4)] hover:shadow-[0_0_30px_rgba(20,241,149,0.6)]"
                     style={{ clipPath: 'polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%)' }}
                 >
                     Enter Studio
                 </button>
                 <button 
                     onClick={() => onNavigate('token-launch')}
-                    className="px-8 py-4 border border-white/20 hover:border-white bg-transparent hover:bg-white/5 text-white font-bold text-lg uppercase tracking-widest transition-all flex items-center gap-2"
+                    className="px-8 py-4 border border-white/20 hover:border-white bg-black/30 hover:bg-white/10 backdrop-blur-sm text-white font-bold text-lg uppercase tracking-widest transition-all flex items-center gap-2"
                 >
                     <Coins size={18} /> Buy $MOVI
                 </button>
@@ -188,8 +208,40 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* Partners / Backed By Section */}
+      <div className="w-full bg-black border-y border-white/5 py-8 relative z-20 overflow-hidden">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
+          <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+              <span className="text-gray-600 font-mono text-[10px] uppercase tracking-[0.3em] whitespace-nowrap">
+                  INFRASTRUCTURE PARTNERS
+              </span>
+              <div className="flex flex-wrap justify-center md:justify-end gap-8 md:gap-16">
+                  {/* Solana */}
+                  <div className="flex items-center gap-2 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500 cursor-pointer group">
+                      <div className="w-6 h-6 bg-gradient-to-br from-[#9945FF] to-[#14F195] rounded-full blur-[1px] group-hover:blur-0 transition-all"></div>
+                      <span className="font-display font-bold text-lg tracking-tight">SOLANA</span>
+                  </div>
+                  {/* Google Cloud */}
+                  <div className="flex items-center gap-2 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                      <div className="w-6 h-6 bg-[#4285F4] rounded-sm flex items-center justify-center text-white font-bold text-[10px]">G</div>
+                      <span className="font-display font-bold text-lg tracking-tight">Google Cloud</span>
+                  </div>
+                  {/* Arweave */}
+                  <div className="flex items-center gap-2 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                      <div className="w-6 h-6 border-2 border-white rounded-full flex items-center justify-center text-[8px] font-bold">A</div>
+                      <span className="font-display font-bold text-lg tracking-tight">ARWEAVE</span>
+                  </div>
+                  {/* Metaplex */}
+                  <div className="flex items-center gap-2 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                      <div className="w-6 h-6 bg-white text-black flex items-center justify-center font-bold text-xs rounded-sm">M</div>
+                      <span className="font-display font-bold text-lg tracking-tight">METAPLEX</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+
       {/* Vision Section */}
-      <section id="vision" className="py-24 px-6 relative border-t border-white/5">
+      <section id="vision" className="py-24 px-6 relative bg-movi-black">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-movi-purple to-transparent opacity-50"></div>
         
         <div className="max-w-7xl mx-auto">
@@ -200,10 +252,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
                         Hollywood has lost its way. Algorithms dictate culture, and risk-aversion kills creativity. 
                         MoviAI restores the soul of cinema by evaluating every project against four immutable pillars.
                     </p>
-                    <div className="flex gap-4 text-sm font-mono text-gray-500">
+                    <div className="flex gap-4 text-sm font-mono text-gray-500 mb-6">
                         <span className="flex items-center gap-2"><TrendingUp size={14} className="text-movi-green" /> Algorithmic Fairness</span>
                         <span className="flex items-center gap-2"><Users size={14} className="text-movi-purple" /> Community Owned</span>
                     </div>
+                    <button 
+                        onClick={() => onNavigate('vision')}
+                        className="px-6 py-3 border border-white/20 hover:border-movi-green hover:text-movi-green text-white font-bold text-sm uppercase tracking-widest transition-colors"
+                    >
+                        Explore Our Vision
+                    </button>
                 </div>
                 <div className="flex-1 w-full">
                     <NorthStarEvaluator />
@@ -228,6 +286,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
                     title="Smart Royalties"
                     description="Blockchain-backed residuals. Creators, actors, and remixers get paid instantly when content is viewed."
                     icon={<Coins size={64} />}
+                    onClick={() => onNavigate('product')}
                 />
             </div>
         </div>
@@ -269,6 +328,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
                                   <p className="text-sm text-gray-500">Users pay to remix scenes, generating royalties for original IP holders.</p>
                               </div>
                           </div>
+                      </div>
+                      
+                      <div className="mt-8">
+                          <button onClick={() => onNavigate('product')} className="text-movi-green hover:text-white font-bold uppercase tracking-widest text-sm flex items-center gap-2 transition-colors">
+                              View Full Architecture <ArrowRight size={16} />
+                          </button>
                       </div>
                   </div>
                   

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export type ViewState = 'landing' | 'whitepaper' | 'token-launch' | 'dao' | 'genesis';
+export type ViewState = 'landing' | 'whitepaper' | 'token-launch' | 'dao' | 'genesis' | 'vision' | 'product';
 
 export interface SectionProps {
     id?: string;

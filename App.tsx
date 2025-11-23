@@ -6,6 +6,8 @@ import TokenLaunch from './components/TokenLaunch';
 import GeminiAssistant from './components/GeminiAssistant';
 import Dao from './components/Dao';
 import GenesisEngine from './components/GenesisEngine';
+import Vision from './components/Vision';
+import Product from './components/Product';
 import { ViewState } from './types';
 
 // Film Leader Intro Animation
@@ -70,6 +72,8 @@ function App() {
           {view === 'token-launch' && <TokenLaunch onBack={() => setView('landing')} />}
           {view === 'dao' && <Dao onBack={() => setView('landing')} />}
           {view === 'genesis' && <GenesisEngine onBack={() => setView('landing')} />}
+          {view === 'vision' && <Vision onBack={() => setView('landing')} />}
+          {view === 'product' && <Product onBack={() => setView('landing')} />}
           
           <GeminiAssistant />
         </>

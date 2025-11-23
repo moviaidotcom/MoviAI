@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { ArrowLeft, Film, Image as ImageIcon, Mic, Brain, MapPin, Video, Loader2, Play, Music, Upload } from 'lucide-react';
+
+import React, { useState, useRef, useEffect } from 'react';
+import { ArrowLeft, Film, Image as ImageIcon, Mic, Brain, MapPin, Video, Loader2, Play, Music, Upload, Download, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 import { 
     generateVeoVideo, 
     generateProImage, 
@@ -16,10 +17,162 @@ interface GenesisEngineProps {
 
 type EngineTab = 'video' | 'image' | 'audio' | 'intel';
 
+// --- Custom Video Player Component ---
+const CustomVideoPlayer: React.FC<{ src: string }> = ({ src }) => {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const [volume, setVolume] = useState(1);
+    const [isMuted, setIsMuted] = useState(false);
+    const [currentTime, setCurrentTime] = useState("0:00");
+    const [duration, setDuration] = useState("0:00");
+
+    useEffect(() => {
+        // Auto-play when source changes
+        if (videoRef.current) {
+            videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+        }
+    }, [src]);
+
+    const togglePlay = () => {
+        if (videoRef.current) {
+            if (isPlaying) {
+                videoRef.current.pause();
+            } else {
+                videoRef.current.play();
+            }
+            setIsPlaying(!isPlaying);
+        }
+    };
+
+    const handleTimeUpdate = () => {
+        if (videoRef.current) {
+            const current = videoRef.current.currentTime;
+            const dur = videoRef.current.duration || 1;
+            setProgress((current / dur) * 100);
+            setCurrentTime(formatTime(current));
+        }
+    };
+
+    const handleLoadedMetadata = () => {
+        if (videoRef.current) {
+            setDuration(formatTime(videoRef.current.duration));
+        }
+    };
+
+    const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const seekTo = (parseFloat(e.target.value) / 100) * (videoRef.current?.duration || 0);
+        if (videoRef.current) {
+            videoRef.current.currentTime = seekTo;
+            setProgress(parseFloat(e.target.value));
+        }
+    };
+
+    const toggleMute = () => {
+        if (videoRef.current) {
+            videoRef.current.muted = !isMuted;
+            setIsMuted(!isMuted);
+        }
+    };
+
+    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newVol = parseFloat(e.target.value);
+        setVolume(newVol);
+        if (videoRef.current) {
+            videoRef.current.volume = newVol;
+            setIsMuted(newVol === 0);
+        }
+    };
+
+    const formatTime = (time: number) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
+
+    return (
+        <div className="relative group bg-black rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
+            <video 
+                ref={videoRef}
+                src={src}
+                className="w-full h-auto max-h-[500px] object-contain cursor-pointer"
+                onClick={togglePlay}
+                onTimeUpdate={handleTimeUpdate}
+                onLoadedMetadata={handleLoadedMetadata}
+                onEnded={() => setIsPlaying(false)}
+                loop
+            />
+            
+            {/* Play Overlay (Center) */}
+            {!isPlaying && (
+                <div 
+                    className="absolute inset-0 flex items-center justify-center bg-black/40 cursor-pointer pointer-events-none"
+                >
+                    <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-[0_0_20px_rgba(20,241,149,0.3)]">
+                        <Play fill="white" size={32} className="ml-1" />
+                    </div>
+                </div>
+            )}
+
+            {/* Controls Bar */}
+            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col gap-2">
+                
+                {/* Progress Bar */}
+                <input 
+                    type="range" 
+                    min="0" 
+                    max="100" 
+                    value={progress} 
+                    onChange={handleSeek}
+                    className="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-movi-green hover:h-2 transition-all"
+                />
+
+                <div className="flex justify-between items-center mt-1">
+                    <div className="flex items-center gap-4">
+                        <button onClick={togglePlay} className="text-white hover:text-movi-green transition-colors">
+                            {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
+                        </button>
+                        
+                        <div className="flex items-center gap-2 group/vol">
+                            <button onClick={toggleMute} className="text-gray-300 hover:text-white">
+                                {isMuted || volume === 0 ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                            </button>
+                            <input 
+                                type="range" 
+                                min="0" 
+                                max="1" 
+                                step="0.1" 
+                                value={isMuted ? 0 : volume} 
+                                onChange={handleVolumeChange}
+                                className="w-20 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-white"
+                            />
+                        </div>
+
+                        <span className="text-xs font-mono text-gray-400">
+                            {currentTime} / {duration}
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <a 
+                            href={src} 
+                            download="veo-generation.mp4" 
+                            className="flex items-center gap-2 px-3 py-1 bg-movi-green/20 hover:bg-movi-green text-movi-green hover:text-black border border-movi-green/50 rounded text-xs font-bold uppercase tracking-wider transition-colors"
+                        >
+                            <Download size={14} /> Download Video
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
     const [activeTab, setActiveTab] = useState<EngineTab>('video');
     const [isLoading, setIsLoading] = useState(false);
-    const [prompt, setPrompt] = useState('');
+    // Set default prompt as requested
+    const [prompt, setPrompt] = useState('A futuristic cityscape with flying cars at sunset, rendered in a cyberpunk style.');
     const [output, setOutput] = useState<any>(null);
     
     // Tool specific states
@@ -70,8 +223,8 @@ const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
         setOutput(null);
 
         try {
-            if (activeTab === 'video') {
-                // Check API Key for Veo as required by guidelines
+            // API Key check for premium features (Veo & Pro Image)
+            if (activeTab === 'video' || activeTab === 'image') {
                 const aiWindow = window as any;
                 if (aiWindow.aistudio) {
                     const hasKey = await aiWindow.aistudio.hasSelectedApiKey();
@@ -79,7 +232,9 @@ const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
                         await aiWindow.aistudio.openSelectKey();
                     }
                 }
+            }
 
+            if (activeTab === 'video') {
                 // Veo Generation
                 const blob = await generateVeoVideo(prompt, veoAspectRatio, uploadedFile?.data, uploadedFile?.mimeType);
                 const url = URL.createObjectURL(blob);
@@ -159,7 +314,7 @@ const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
                 {/* Sidebar Controls */}
                 <div className="lg:col-span-3 space-y-2">
                     <button 
-                        onClick={() => { setActiveTab('video'); setOutput(null); }}
+                        onClick={() => { setActiveTab('video'); setOutput(null); setPrompt('A futuristic cityscape with flying cars at sunset, rendered in a cyberpunk style.'); }}
                         className={`w-full p-4 rounded-xl border flex items-center gap-3 transition-all ${activeTab === 'video' ? 'bg-movi-green/10 border-movi-green text-movi-green shadow-[0_0_15px_rgba(20,241,149,0.2)]' : 'bg-surface border-white/5 text-gray-400 hover:bg-gray-900'}`}
                     >
                         <Video size={20} />
@@ -170,18 +325,18 @@ const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
                     </button>
 
                     <button 
-                        onClick={() => { setActiveTab('image'); setOutput(null); }}
+                        onClick={() => { setActiveTab('image'); setOutput(null); setPrompt('A cinematic shot of a neon city...'); }}
                         className={`w-full p-4 rounded-xl border flex items-center gap-3 transition-all ${activeTab === 'image' ? 'bg-movi-purple/10 border-movi-purple text-movi-purple shadow-[0_0_15px_rgba(153,69,255,0.2)]' : 'bg-surface border-white/5 text-gray-400 hover:bg-gray-900'}`}
                     >
                         <ImageIcon size={20} />
                         <div className="text-left">
-                            <div className="font-bold font-display">Art Dept</div>
+                            <div className="font-bold font-display">Image Studio</div>
                             <div className="text-[10px] opacity-60">Pro Image Gen</div>
                         </div>
                     </button>
 
                     <button 
-                        onClick={() => { setActiveTab('audio'); setOutput(null); }}
+                        onClick={() => { setActiveTab('audio'); setOutput(null); setPrompt('Welcome to the future of cinema.'); }}
                         className={`w-full p-4 rounded-xl border flex items-center gap-3 transition-all ${activeTab === 'audio' ? 'bg-blue-500/10 border-blue-500 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.2)]' : 'bg-surface border-white/5 text-gray-400 hover:bg-gray-900'}`}
                     >
                         <Mic size={20} />
@@ -192,7 +347,7 @@ const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
                     </button>
 
                     <button 
-                        onClick={() => { setActiveTab('intel'); setOutput(null); }}
+                        onClick={() => { setActiveTab('intel'); setOutput(null); setPrompt('Analyze the current trends in sci-fi cinema.'); }}
                         className={`w-full p-4 rounded-xl border flex items-center gap-3 transition-all ${activeTab === 'intel' ? 'bg-movi-gold/10 border-movi-gold text-movi-gold shadow-[0_0_15px_rgba(255,215,0,0.2)]' : 'bg-surface border-white/5 text-gray-400 hover:bg-gray-900'}`}
                     >
                         <Brain size={20} />
@@ -310,6 +465,7 @@ const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
                                         activeTab === 'image' ? "Describe the image..." :
                                         activeTab === 'audio' && !uploadedFile ? "Enter text to speak..." :
                                         activeTab === 'audio' && uploadedFile ? "Click Generate to transcribe..." :
+                                        activeTab === 'intel' && intelMode === 'maps' ? "Ask for a location (e.g., 'Best coffee shops nearby?')..." :
                                         "Enter your query..."
                                     }
                                     className="w-full h-32 bg-black border border-gray-700 rounded-xl p-4 text-white font-mono focus:outline-none focus:border-white resize-none"
@@ -332,10 +488,19 @@ const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
                                 <h3 className="font-bold font-display uppercase mb-4 text-gray-400">System Output</h3>
                                 <div className="bg-black rounded-xl overflow-hidden border border-gray-800">
                                     {output.type === 'video' && (
-                                        <video src={output.url} controls className="w-full h-auto max-h-[500px]" autoPlay loop />
+                                        <CustomVideoPlayer src={output.url} />
                                     )}
                                     {output.type === 'image' && (
-                                        <img src={output.url} alt="Generated" className="w-full h-auto object-contain max-h-[600px]" />
+                                        <div className="relative group">
+                                            <img src={output.url} alt="Generated" className="w-full h-auto object-contain max-h-[600px]" />
+                                            <a 
+                                                href={output.url} 
+                                                download="generated-image.png" 
+                                                className="absolute bottom-4 right-4 px-4 py-2 bg-movi-purple hover:bg-white hover:text-movi-purple text-white font-bold uppercase text-xs rounded transition-colors opacity-0 group-hover:opacity-100 flex items-center gap-2"
+                                            >
+                                                <Download size={16} /> Download Art
+                                            </a>
+                                        </div>
                                     )}
                                     {output.type === 'text' && (
                                         <div className="p-6 font-mono text-sm text-gray-300 whitespace-pre-wrap max-h-[400px] overflow-y-auto">
@@ -349,13 +514,32 @@ const GenesisEngine: React.FC<GenesisEngineProps> = ({ onBack }) => {
                                     )}
                                     {output.type === 'maps' && (
                                         <div className="p-6">
-                                            <div className="font-mono text-sm text-gray-300 mb-4">{output.content}</div>
-                                            <div className="grid gap-2">
-                                                {output.chunks.map((chunk: any, i: number) => {
-                                                    if (chunk.web?.uri) return <a key={i} href={chunk.web.uri} target="_blank" rel="noreferrer" className="text-movi-green hover:underline text-xs truncate block">{chunk.web.title}</a>;
-                                                    return null;
-                                                })}
-                                            </div>
+                                            <div className="font-mono text-sm text-gray-300 mb-4 whitespace-pre-wrap">{output.content}</div>
+                                            {output.chunks && output.chunks.length > 0 && (
+                                                <div className="grid gap-2 mt-4 border-t border-gray-800 pt-4">
+                                                    <div className="text-xs font-bold text-gray-500 uppercase mb-2">Sources</div>
+                                                    {output.chunks.map((chunk: any, i: number) => {
+                                                        if (chunk.web?.uri) {
+                                                            return (
+                                                                <a key={i} href={chunk.web.uri} target="_blank" rel="noreferrer" className="text-movi-green hover:underline text-xs truncate block flex items-center gap-2">
+                                                                    <div className="w-1 h-1 bg-movi-green rounded-full"></div>
+                                                                    {chunk.web.title}
+                                                                </a>
+                                                            );
+                                                        }
+                                                        if (chunk.maps?.uri) {
+                                                            // Google Maps Grounding chunk structure
+                                                            return (
+                                                                <a key={i} href={chunk.maps.uri} target="_blank" rel="noreferrer" className="text-movi-gold hover:underline text-xs truncate block flex items-center gap-2">
+                                                                    <MapPin size={12} />
+                                                                    {chunk.maps.title || "Google Maps Location"}
+                                                                </a>
+                                                            );
+                                                        }
+                                                        return null;
+                                                    })}
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                     {output.type === 'error' && (
