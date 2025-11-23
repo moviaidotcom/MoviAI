@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Compass, Heart, Shield, Zap, Lightbulb, TrendingDown, Database, Users, Star } from 'lucide-react';
+import { ArrowLeft, Compass, Heart, Shield, Zap, Lightbulb, TrendingDown, Database, Star } from 'lucide-react';
 import NorthStarEvaluator from './NorthStarEvaluator';
 
 interface VisionProps {
@@ -30,7 +30,7 @@ const Vision: React.FC<VisionProps> = ({ onBack }) => {
                         <span className="font-display font-bold text-lg tracking-tight uppercase">Manifesto</span>
                     </div>
                     <div className="hidden md:block text-xs font-mono text-gray-500 uppercase tracking-widest">
-                        PROTOCOL MISSION V1.0
+                        PROTOCOL MISSION V2.0
                     </div>
                 </div>
             </div>
@@ -58,9 +58,9 @@ const Vision: React.FC<VisionProps> = ({ onBack }) => {
                 {/* The Problem Section */}
                 <div className="grid md:grid-cols-2 gap-16 items-center mb-32">
                     <div className="space-y-8">
-                        <h2 className="text-4xl font-display font-bold mb-4">The Death of <span className="text-red-500">Risk</span></h2>
+                        <h2 className="text-4xl font-display font-bold mb-4">From Art to <span className="text-red-500">Algorithm</span></h2>
                         <p className="text-gray-300 leading-relaxed">
-                            In the 1980s, the studio system shifted from art to assets. Films stopped being evaluated on "Will this move audiences?" and became "What is the projected ROI?"
+                            The shift from "Will this move audiences?" to "What is the projected ROI?" destroyed creative risk. Modern blockbusters prioritize spectacle over soul, and algorithmic data dictates story beats.
                         </p>
                         <div className="space-y-4">
                             <div className="bg-red-900/10 border border-red-900/30 p-6 rounded-xl flex gap-4 items-start group hover:bg-red-900/20 transition-colors">
@@ -69,7 +69,7 @@ const Vision: React.FC<VisionProps> = ({ onBack }) => {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-white uppercase font-display mb-1">Algorithmic Storytelling</h4>
-                                    <p className="text-sm text-gray-400">Data dictates tropes. Moral complexity is sanded down because algorithms show audiences "disengage" when forced to think.</p>
+                                    <p className="text-sm text-gray-400">Studios use analytics to flatten moral complexity. Stories are engineered to prevent you from hitting "stop" rather than to make you feel.</p>
                                 </div>
                             </div>
                             <div className="bg-red-900/10 border border-red-900/30 p-6 rounded-xl flex gap-4 items-start group hover:bg-red-900/20 transition-colors">
@@ -78,7 +78,7 @@ const Vision: React.FC<VisionProps> = ({ onBack }) => {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-white uppercase font-display mb-1">The Ambiguous Anti-Hero</h4>
-                                    <p className="text-sm text-gray-400">Cynicism replaced hope. Stories became vehicles for spectacle without providing a meaningful moral framework.</p>
+                                    <p className="text-sm text-gray-400">Moral clarity has been replaced by cynicism. Stories often lack a meaningful framework, blurring lines for edginess rather than depth.</p>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ const Vision: React.FC<VisionProps> = ({ onBack }) => {
                 {/* The Solution / 4 Pillars */}
                 <div className="mb-32">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-display font-bold mb-4">The <span className="text-movi-green">North Star</span> Criteria</h2>
+                        <h2 className="text-4xl font-display font-bold mb-4">The <span className="text-movi-green">North Star</span> Pillars</h2>
                         <p className="text-gray-400 max-w-2xl mx-auto">
                             To prevent MoviAI from succumbing to the same economic pressures, we embed ethical evaluation directly into our DAO funding mechanism. Every project is judged on four immutable pillars.
                         </p>
@@ -112,25 +112,25 @@ const Vision: React.FC<VisionProps> = ({ onBack }) => {
                     <div className="grid md:grid-cols-2 gap-6">
                         <PillarCard 
                             icon={<Zap size={32} />}
-                            title="Inspiration & Heroism"
+                            title="Inspiration & The Heroic Journey"
                             question="Does this story model behavior worth emulating?"
-                            desc="We reward characters who face meaningful moral choices, where victory comes through virtue, not just superior violence."
+                            desc="Heroes must demonstrate moral courage, not just physical power. Victory should come through virtue. We want audiences to leave wanting to be braver."
                             color="text-movi-gold"
                             borderColor="border-movi-gold/30"
                         />
                         <PillarCard 
                             icon={<Heart size={32} />}
-                            title="Love & Connection"
-                            question="Is human connection essential and transformative?"
-                            desc="Relationships should require sacrifice and vulnerability. We reject transactional romance and celebrate genuine community."
+                            title="Love & Human Connection"
+                            question="Is connection essential and transformative?"
+                            desc="We celebrate love that requires sacrifice and vulnerability, not transactional romance. Relationships should be the point, not the subplot."
                             color="text-movi-purple"
                             borderColor="border-movi-purple/30"
                         />
                         <PillarCard 
                             icon={<Shield size={32} />}
-                            title="Moral Complexity"
+                            title="Moral Complexity & Ethical Struggle"
                             question="Does the story wrestle with right and wrong?"
-                            desc="We avoid simple answers. Ethical stakes must be treated as seriously as physical stakes. Consequences must follow choices."
+                            desc="We avoid easy answers. Characters must face dilemmas where even the right choice has costs. We reject nihilism and 'evil for evil's sake'."
                             color="text-blue-400"
                             borderColor="border-blue-400/30"
                         />
@@ -138,7 +138,7 @@ const Vision: React.FC<VisionProps> = ({ onBack }) => {
                             icon={<Lightbulb size={32} />}
                             title="Hope & The Human Spirit"
                             question="Does it affirm that struggle has meaning?"
-                            desc="Even in dark stories, we look for resilience. We reject nihilism and affirm that individual choices matter."
+                            desc="Even in darkness, we look for resilience. Stories should offer a counter-narrative to cynicism: that individual action matters and tomorrow can be better."
                             color="text-movi-green"
                             borderColor="border-movi-green/30"
                         />

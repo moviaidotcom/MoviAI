@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, CheckCircle2, AlertTriangle, FileText } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, AlertTriangle, FileText, Target, ShieldAlert, BarChart3, Users } from 'lucide-react';
 
 interface WhitepaperProps {
     onBack: () => void;
@@ -10,14 +10,14 @@ const Section: React.FC<{ title: string; children: React.ReactNode; id?: string 
         <h2 className="text-3xl font-display font-bold mb-6 text-white border-b border-white/10 pb-4 flex items-baseline gap-3">
             {title}
         </h2>
-        <div className="text-gray-300 leading-relaxed space-y-4">
+        <div className="text-gray-300 leading-relaxed space-y-4 font-light text-lg">
             {children}
         </div>
     </div>
 );
 
 const Subsection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-    <div className="mb-8 pl-4 border-l border-movi-green/30">
+    <div className="mb-8 pl-6 border-l-2 border-movi-green/30">
         <h3 className="text-xl font-bold mb-3 text-movi-green font-display tracking-wide">{title}</h3>
         <div className="space-y-3">{children}</div>
     </div>
@@ -43,7 +43,7 @@ const Whitepaper: React.FC<WhitepaperProps> = ({ onBack }) => {
                         <div className="w-6 h-6 bg-white text-black rounded flex items-center justify-center font-bold text-xs">
                             <FileText size={14} />
                         </div>
-                        <span className="font-display font-bold tracking-tight uppercase">Protocol Script</span>
+                        <span className="font-display font-bold tracking-tight uppercase">Business Plan</span>
                     </div>
                     <button className="bg-white/10 hover:bg-white/20 text-white px-4 py-1.5 rounded-full text-xs font-bold transition-colors uppercase tracking-wider font-display">
                         Export PDF
@@ -55,9 +55,9 @@ const Whitepaper: React.FC<WhitepaperProps> = ({ onBack }) => {
             <div className="max-w-4xl mx-auto px-6 pt-32 pb-24 relative z-10">
                 <div className="text-center mb-16">
                     <div className="inline-block px-3 py-1 mb-4 border border-movi-green/50 text-movi-green text-xs font-bold uppercase tracking-[0.2em] font-script">
-                        Confidential // V1.0
+                        Confidential // V2.0
                     </div>
-                    <h1 className="text-6xl md:text-8xl font-display font-bold mb-6 tracking-tighter">MoviAI <span className="text-gray-700">Docs</span></h1>
+                    <h1 className="text-6xl md:text-8xl font-display font-bold mb-6 tracking-tighter">MoviAI <span className="text-gray-700">Masterplan</span></h1>
                     <p className="text-2xl text-gray-400 font-light italic font-serif">"Don't just watch the story. Own it. Remix it."</p>
                 </div>
 
@@ -71,7 +71,7 @@ const Whitepaper: React.FC<WhitepaperProps> = ({ onBack }) => {
                         <a href="#revenue" className="hover:text-movi-green transition-colors flex justify-between"><span>5. Revenue Model</span> <span>15</span></a>
                         <a href="#gtm" className="hover:text-movi-green transition-colors flex justify-between"><span>6. Go-To-Market</span> <span>18</span></a>
                         <a href="#financials" className="hover:text-movi-green transition-colors flex justify-between"><span>7. Financial Projections</span> <span>22</span></a>
-                        <a href="#team" className="hover:text-movi-green transition-colors flex justify-between"><span>8. Team Requirements</span> <span>25</span></a>
+                        <a href="#team" className="hover:text-movi-green transition-colors flex justify-between"><span>8. Team & Risk</span> <span>25</span></a>
                     </div>
                 </div>
 
@@ -92,40 +92,58 @@ const Whitepaper: React.FC<WhitepaperProps> = ({ onBack }) => {
                 </Section>
 
                 <Section title="2. The Lost North Star" id="lost-north-star">
-                    <p>The decline in the quality and purpose of contemporary Hollywood content stems from a profound philosophical shift: the transition from filmmaking as an art form guided by humanistic ideals to a data-driven business model optimized for maximum financial return. Hollywood effectively lost its North Star—the commitment to inspiring, morally challenging, and elevating the human spirit.</p>
+                    <p className="mb-6">
+                        The decline in the quality and purpose of contemporary Hollywood content stems from a profound philosophical shift: the transition from filmmaking as an art form guided by humanistic ideals to a data-driven business model optimized for maximum financial return. Hollywood effectively lost its North Star—the commitment to inspiring, morally challenging, and elevating the human spirit.
+                    </p>
                     
-                    <Subsection title="The Shift: Money, Data, and the Death of Risk">
-                        <div className="overflow-x-auto border border-white/10 rounded">
+                    <Subsection title="The Shift: Art to Algorithm">
+                        <p>
+                            In its earlier eras, mainstream Hollywood maintained a discernible commitment to moral clarity, aspiration, and collective hope. The heroes typically fought for a recognizable good. But with the rise of the Corporate Blockbuster Era, the focus shifted from what content should be (inspiring) to what content will sell (predictable).
+                        </p>
+                        <div className="mt-4 overflow-x-auto border border-white/10 rounded">
                             <table className="w-full text-left text-sm border-collapse">
                                 <thead>
                                     <tr className="bg-white/5 border-b border-white/10">
-                                        <th className="py-3 pl-4 text-gray-400 font-mono uppercase tracking-wider">Loss of North Star</th>
-                                        <th className="py-3 pl-4 text-gray-400 font-mono uppercase tracking-wider">The Money-Driven Replacement</th>
+                                        <th className="py-3 pl-4 text-gray-400 font-mono uppercase tracking-wider">What Was Lost</th>
+                                        <th className="py-3 pl-4 text-gray-400 font-mono uppercase tracking-wider">The Replacement</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-white/5 font-mono text-xs md:text-sm">
                                     <tr>
-                                        <td className="py-4 pl-4 pr-4 font-bold text-white">Loss of Inspiration</td>
-                                        <td className="py-4 pl-4 text-gray-400">Optimization for Spectacle (VFX over drama)</td>
+                                        <td className="py-4 pl-4 pr-4 font-bold text-white">Inspiration & Hope</td>
+                                        <td className="py-4 pl-4 text-gray-400">Optimization for Spectacle (VFX over soul)</td>
                                     </tr>
                                     <tr>
-                                        <td className="py-4 pl-4 pr-4 font-bold text-white">Loss of Moral Clarity</td>
-                                        <td className="py-4 pl-4 text-gray-400">The Ambiguous Anti-Hero (Cynicism over framework)</td>
+                                        <td className="py-4 pl-4 pr-4 font-bold text-white">Moral Clarity</td>
+                                        <td className="py-4 pl-4 text-gray-400">The Ambiguous Anti-Hero (Cynicism)</td>
                                     </tr>
                                     <tr>
-                                        <td className="py-4 pl-4 pr-4 font-bold text-white">Loss of Human Spirit</td>
-                                        <td className="py-4 pl-4 text-gray-400">Algorithmic Storytelling (Data dictates tropes)</td>
+                                        <td className="py-4 pl-4 pr-4 font-bold text-white">Human Spirit</td>
+                                        <td className="py-4 pl-4 text-gray-400">Algorithmic Storytelling (Data dictates art)</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </Subsection>
 
-                    <Subsection title="Implementing the North Star: DAO Governance">
-                        <p>To prevent MoviAI from succumbing to the same economic pressures, we embed ethical evaluation into our funding mechanism. Projects are scored on:</p>
-                        <ul className="list-none space-y-2 mt-4 font-mono text-sm">
-                            <li className="flex gap-3"><span className="text-movi-green">01.</span> <span>Commercial Viability (40%)</span></li>
-                            <li className="flex gap-3"><span className="text-movi-green">02.</span> <span>North Star Alignment (60%)</span></li>
+                    <Subsection title="The Four Pillars of Meaningful Entertainment">
+                        <ul className="space-y-4">
+                            <li>
+                                <strong className="text-white block mb-1">1. Inspiration & The Heroic Journey</strong>
+                                <span className="text-gray-400 text-sm">Heroes must model moral courage, not just power. Audiences should leave wanting to be braver.</span>
+                            </li>
+                            <li>
+                                <strong className="text-white block mb-1">2. Love & Human Connection</strong>
+                                <span className="text-gray-400 text-sm">Love is a force that redeems and complicates. We reject transactional romance for genuine connection.</span>
+                            </li>
+                            <li>
+                                <strong className="text-white block mb-1">3. Moral Complexity & Ethical Struggle</strong>
+                                <span className="text-gray-400 text-sm">Stories must wrestle with right and wrong. Consequences must follow choices.</span>
+                            </li>
+                            <li>
+                                <strong className="text-white block mb-1">4. Hope & The Human Spirit</strong>
+                                <span className="text-gray-400 text-sm">Even in darkness, we affirm resilience. Struggle has meaning; tomorrow can be better.</span>
+                            </li>
                         </ul>
                     </Subsection>
                 </Section>
@@ -137,17 +155,24 @@ const Whitepaper: React.FC<WhitepaperProps> = ({ onBack }) => {
                                 <AlertTriangle className="text-movi-gold shrink-0 mt-1" size={20} />
                                 <div>
                                     <strong className="text-white font-display uppercase">Creative Crisis</strong>
-                                    <p className="text-sm text-gray-400 mt-1">Studios prioritize "safe" IP over original storytelling.</p>
+                                    <p className="text-sm text-gray-400 mt-1">Studios prioritize "safe" IP over original storytelling. Audiences reject formulaic content.</p>
                                 </div>
                             </li>
                             <li className="flex gap-4 items-start">
                                 <AlertTriangle className="text-movi-gold shrink-0 mt-1" size={20} />
                                 <div>
                                     <strong className="text-white font-display uppercase">Economic Dysfunction</strong>
-                                    <p className="text-sm text-gray-400 mt-1">Streaming prices increased 30%+ while quality declined.</p>
+                                    <p className="text-sm text-gray-400 mt-1">Streaming prices up 30%+. "Hollywood accounting" prevents creator compensation.</p>
                                 </div>
                             </li>
                         </ul>
+                    </Subsection>
+                    <Subsection title="Market Opportunity">
+                        <p className="text-sm">
+                            <strong className="text-white">Gen Z/Alpha:</strong> Expect interactive, remixable content.<br/>
+                            <strong className="text-white">Indie Creators:</strong> Locked out of traditional gatekeepers.<br/>
+                            <strong className="text-white">Market Size:</strong> $500B+ Global Streaming + $250B+ User-Generated Content Economy.
+                        </p>
                     </Subsection>
                 </Section>
 
@@ -155,49 +180,52 @@ const Whitepaper: React.FC<WhitepaperProps> = ({ onBack }) => {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="glass-panel p-6 rounded-sm border-t-2 border-t-movi-purple">
                             <h4 className="text-lg font-bold text-white mb-2 font-display uppercase">1. Greenlight DAO</h4>
-                            <p className="text-sm text-gray-400">Decentralized project funding. $MOVI token holders vote on projects.</p>
+                            <p className="text-sm text-gray-400">Decentralized project funding. $MOVI token holders vote on projects using the North Star Criteria (60% weight).</p>
                         </div>
                         <div className="glass-panel p-6 rounded-sm border-t-2 border-t-movi-green">
                             <h4 className="text-lg font-bold text-white mb-2 font-display uppercase">2. Genesis Engine</h4>
-                            <p className="text-sm text-gray-400">Browser-based AI production suite. Scene generation & remix tools.</p>
+                            <p className="text-sm text-gray-400">Browser-based AI production suite. Scene generation, remix tools, and digital replica studio with ethical safeguards.</p>
                         </div>
                         <div className="glass-panel p-6 rounded-sm border-t-2 border-t-blue-500">
                             <h4 className="text-lg font-bold text-white mb-2 font-display uppercase">3. Smart Royalties</h4>
-                            <p className="text-sm text-gray-400">Blockchain layer for transparent compensation & instant micropayments.</p>
+                            <p className="text-sm text-gray-400">Blockchain layer for transparent compensation. Automated payments for views, remixes, and asset usage.</p>
                         </div>
                         <div className="glass-panel p-6 rounded-sm border-t-2 border-t-pink-500">
                             <h4 className="text-lg font-bold text-white mb-2 font-display uppercase">4. Metaverse Theater</h4>
-                            <p className="text-sm text-gray-400">Social viewing experiences. VR/AR watch parties with interactive UI.</p>
+                            <p className="text-sm text-gray-400">Social viewing experiences. VR/AR watch parties with interactive UI and gamified rewards.</p>
                         </div>
                     </div>
                 </Section>
 
                 <Section title="5. Revenue Model" id="revenue">
-                    <p>MoviAI operates on a transaction economy rather than subscription lock-in.</p>
-                    <ul className="space-y-4 mt-6">
-                        <li className="flex items-start gap-3 p-4 bg-white/5 rounded">
-                            <CheckCircle2 className="text-movi-green mt-1" size={18} />
-                            <div>
-                                <strong className="text-white font-display uppercase tracking-wide text-sm block mb-1">Platform Transaction Fees (Primary)</strong>
-                                <span className="text-sm text-gray-400">1.5% fee on all transactions (DAO voting, content purchases, remixes).</span>
-                            </div>
-                        </li>
-                        <li className="flex items-start gap-3 p-4 bg-white/5 rounded">
-                            <CheckCircle2 className="text-movi-green mt-1" size={18} />
-                            <div>
-                                <strong className="text-white font-display uppercase tracking-wide text-sm block mb-1">Asset Marketplace Commission</strong>
-                                <span className="text-sm text-gray-400">8-12% commission on sales of 3D models, scripts, and sound effects.</span>
-                            </div>
-                        </li>
-                    </ul>
+                    <p>MoviAI operates on a transaction economy rather than just subscription lock-in.</p>
+                    <div className="grid md:grid-cols-2 gap-6 mt-6">
+                        <div className="p-4 bg-white/5 rounded border border-white/5">
+                            <h5 className="font-bold text-movi-green uppercase mb-2">Platform Fees</h5>
+                            <p className="text-sm text-gray-400">1.5% fee on all transactions (DAO voting, content purchases, remixes). Low friction encourages volume.</p>
+                        </div>
+                        <div className="p-4 bg-white/5 rounded border border-white/5">
+                            <h5 className="font-bold text-movi-purple uppercase mb-2">Asset Marketplace</h5>
+                            <p className="text-sm text-gray-400">8-12% commission on sales of 3D models, sound effects, and scripts.</p>
+                        </div>
+                        <div className="p-4 bg-white/5 rounded border border-white/5">
+                            <h5 className="font-bold text-blue-400 uppercase mb-2">Enterprise Licensing</h5>
+                            <p className="text-sm text-gray-400">B2B SaaS licensing of the Genesis Engine to traditional studios ($5k-$50k/month).</p>
+                        </div>
+                        <div className="p-4 bg-white/5 rounded border border-white/5">
+                            <h5 className="font-bold text-white uppercase mb-2">Subscriptions</h5>
+                            <p className="text-sm text-gray-400">Hybrid tiers: Free (Ads), Base ($4.99/mo + tokens), Creator Pro ($19.99/mo + full tools).</p>
+                        </div>
+                    </div>
                 </Section>
 
                 <Section title="6. Go-To-Market Strategy" id="gtm">
                     <div className="border-l-2 border-gray-700 ml-2 space-y-12 relative">
                          {[
-                             { phase: "Phase 1 (Months 1-6)", title: "Community Building", desc: "Partner with indie filmmakers. Launch $MOVI token." },
-                             { phase: "Phase 2 (Months 7-12)", title: "Technology Validation", desc: "Release Genesis Engine beta. Produce 3 films." },
-                             { phase: "Phase 3 (Year 2)", title: "Mainstream Push", desc: "Mobile apps. Enterprise licensing deals." }
+                             { phase: "Phase 1 (Months 1-6)", title: "Community Building", desc: "Partner with indie filmmakers. Launch $MOVI token. Recruit 10k beta users." },
+                             { phase: "Phase 2 (Months 7-12)", title: "Technology Validation", desc: "Release Genesis Engine beta. Produce 3 full-length films. Test smart contracts." },
+                             { phase: "Phase 3 (Year 2)", title: "Mainstream Push", desc: "Major marketing campaign. Gaming partnerships (Roblox/Fortnite). Mobile apps with AR." },
+                             { phase: "Phase 4 (Year 3+)", title: "Ecosystem Maturity", desc: "VR theater integration. Expansion to music/gaming. International DAOs." }
                          ].map((item, i) => (
                              <div key={i} className="relative pl-8">
                                  <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-movi-black border-2 border-movi-purple"></div>
@@ -211,46 +239,69 @@ const Whitepaper: React.FC<WhitepaperProps> = ({ onBack }) => {
 
                 <Section title="7. Financial Projections" id="financials">
                     <div className="bg-black p-6 rounded-xl border border-white/10 font-mono text-sm">
-                        <div className="grid grid-cols-3 gap-4 text-center border-b border-gray-800 pb-4 mb-4 font-bold text-gray-500 uppercase">
-                            <div className="text-left pl-4">Metric</div>
-                            <div>Year 1</div>
-                            <div>Year 3</div>
+                        <div className="grid grid-cols-4 gap-4 text-center border-b border-gray-800 pb-4 mb-4 font-bold text-gray-500 uppercase">
+                            <div className="text-left pl-4">Year</div>
+                            <div>Users</div>
+                            <div>Revenue</div>
+                            <div>Net Profit</div>
                         </div>
                         <div className="space-y-6">
-                            <div className="grid grid-cols-3 gap-4 text-center">
-                                <div className="text-left pl-4 font-semibold text-white">Users</div>
-                                <div>50,000</div>
-                                <div>2,000,000</div>
-                            </div>
-                            <div className="grid grid-cols-3 gap-4 text-center">
-                                <div className="text-left pl-4 font-semibold text-white">Revenue</div>
+                            <div className="grid grid-cols-4 gap-4 text-center items-center">
+                                <div className="text-left pl-4 font-semibold text-white">Year 1</div>
+                                <div>50k</div>
                                 <div>$900k</div>
-                                <div>$36M</div>
-                            </div>
-                            <div className="grid grid-cols-3 gap-4 text-center">
-                                <div className="text-left pl-4 font-semibold text-white">Net Profit</div>
                                 <div className="text-red-500">-$1.6M</div>
+                            </div>
+                            <div className="grid grid-cols-4 gap-4 text-center items-center">
+                                <div className="text-left pl-4 font-semibold text-white">Year 2</div>
+                                <div>500k</div>
+                                <div>$9M</div>
+                                <div className="text-movi-green">+$2M</div>
+                            </div>
+                            <div className="grid grid-cols-4 gap-4 text-center items-center">
+                                <div className="text-left pl-4 font-semibold text-white">Year 3</div>
+                                <div>2M</div>
+                                <div>$36M</div>
                                 <div className="text-movi-green">+$16M</div>
                             </div>
                         </div>
                     </div>
                 </Section>
 
-                 <Section title="8. Team Requirements" id="team">
-                    <div className="grid md:grid-cols-2 gap-4">
-                        <div className="p-5 bg-white/5 border border-white/5 hover:border-movi-purple/50 transition-colors rounded-lg group">
-                            <h5 className="font-bold text-white font-display uppercase mb-1 group-hover:text-movi-purple">CEO / Co-Founder</h5>
-                            <p className="text-xs text-gray-400 font-mono">Entertainment veteran with Web3 fluency.</p>
+                <Section title="8. Team & Risk Analysis" id="team">
+                    <Subsection title="Key Risks & Mitigation">
+                        <ul className="space-y-4">
+                            <li className="flex gap-4 items-start">
+                                <ShieldAlert className="text-movi-purple shrink-0 mt-1" size={20} />
+                                <div>
+                                    <strong className="text-white font-display uppercase text-sm">Technical Risk</strong>
+                                    <p className="text-sm text-gray-400">AI quality issues. Mitigation: Hybrid model (Human+AI), "Human-First" badge system.</p>
+                                </div>
+                            </li>
+                            <li className="flex gap-4 items-start">
+                                <ShieldAlert className="text-movi-purple shrink-0 mt-1" size={20} />
+                                <div>
+                                    <strong className="text-white font-display uppercase text-sm">Regulatory Risk</strong>
+                                    <p className="text-sm text-gray-400">Crypto regulations. Mitigation: Dual-token model, legal structure in crypto-friendly jurisdiction.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </Subsection>
+                    
+                    <div className="mt-8 grid md:grid-cols-2 gap-4">
+                        <div className="p-5 bg-white/5 border border-white/5 rounded-lg">
+                            <h5 className="font-bold text-white font-display uppercase mb-1">Founding Team</h5>
+                            <p className="text-xs text-gray-400 font-mono">CEO (Web3 Vet), CTO (AI/Blockchain), CCO (Filmmaker), Head of Community.</p>
                         </div>
-                        <div className="p-5 bg-white/5 border border-white/5 hover:border-movi-green/50 transition-colors rounded-lg group">
-                            <h5 className="font-bold text-white font-display uppercase mb-1 group-hover:text-movi-green">CTO / Co-Founder</h5>
-                            <p className="text-xs text-gray-400 font-mono">Blockchain/AI engineer with product vision.</p>
+                        <div className="p-5 bg-white/5 border border-white/5 rounded-lg">
+                            <h5 className="font-bold text-white font-display uppercase mb-1">Success Metrics</h5>
+                            <p className="text-xs text-gray-400 font-mono">MAU, Remix Rate, Creator Earnings, DAO Participation.</p>
                         </div>
                     </div>
                 </Section>
 
                 <div className="mt-20 pt-10 border-t border-white/10 text-center">
-                    <p className="text-2xl font-display font-bold mb-6 text-gray-500">END OF SCRIPT</p>
+                    <p className="text-2xl font-display font-bold mb-6 text-gray-500">END OF PLAN</p>
                     <button onClick={onBack} className="text-white border border-white/30 px-8 py-3 hover:bg-white hover:text-black transition-all font-bold uppercase tracking-widest text-sm">
                         Return to Studio
                     </button>

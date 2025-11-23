@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Cpu, Vote, Coins, Globe, Layers, ShieldCheck, Zap, Repeat, BarChart3, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Cpu, Vote, Coins, Globe, Layers, ShieldCheck, Zap, Repeat, BarChart3, CheckCircle2, Briefcase } from 'lucide-react';
 
 interface ProductProps {
     onBack: () => void;
@@ -34,7 +34,7 @@ const Product: React.FC<ProductProps> = ({ onBack }) => {
                         <span className="font-display font-bold text-lg tracking-tight uppercase">Architecture</span>
                     </div>
                     <div className="hidden md:block text-xs font-mono text-gray-500 uppercase tracking-widest">
-                        System Overview V2.0
+                        System Overview V2.1
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@ const Product: React.FC<ProductProps> = ({ onBack }) => {
                             </div>
                             <div>
                                 <h2 className="text-3xl font-display font-bold uppercase">Revenue Model</h2>
-                                <p className="text-sm text-gray-400 font-mono uppercase tracking-wider">Transaction Economy vs Subscription Lock-in</p>
+                                <p className="text-sm text-gray-400 font-mono uppercase tracking-wider">Transaction Economy & Enterprise Licensing</p>
                             </div>
                         </div>
 
@@ -133,7 +133,7 @@ const Product: React.FC<ProductProps> = ({ onBack }) => {
                                     <div>
                                         <h3 className="text-xl font-bold text-white mb-2 font-display">Platform Fees (1.5%)</h3>
                                         <p className="text-gray-400 text-sm leading-relaxed">
-                                            A minimal transaction fee applied to all DAO votes, content purchases, and remix generations. Low friction encourages high volume.
+                                            A minimal fee on all DAO votes, purchases, and remixes. Low friction encourages high volume.
                                         </p>
                                     </div>
                                 </div>
@@ -142,16 +142,25 @@ const Product: React.FC<ProductProps> = ({ onBack }) => {
                                     <div>
                                         <h3 className="text-xl font-bold text-white mb-2 font-display">Marketplace Commission (8-12%)</h3>
                                         <p className="text-gray-400 text-sm leading-relaxed">
-                                            MoviAI takes a standard commission on the sale of production assets (3D models, scripts, SFX) sold between users.
+                                            Commission on sales of production assets (3D models, scripts, SFX) between users.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-4">
+                                    <div className="mt-1"><Briefcase className="text-movi-gold" size={24} /></div>
+                                    <div>
+                                        <h3 className="text-xl font-bold text-white mb-2 font-display">Enterprise Licensing (B2B)</h3>
+                                        <p className="text-gray-400 text-sm leading-relaxed">
+                                            SaaS pricing ($5k-$50k/mo) for traditional studios to use the Genesis Engine.
                                         </p>
                                     </div>
                                 </div>
                                 <div className="flex gap-4">
                                     <div className="mt-1"><ShieldCheck className="text-movi-purple" size={24} /></div>
                                     <div>
-                                        <h3 className="text-xl font-bold text-white mb-2 font-display">Enterprise Licensing</h3>
+                                        <h3 className="text-xl font-bold text-white mb-2 font-display">Subscriptions</h3>
                                         <p className="text-gray-400 text-sm leading-relaxed">
-                                            SaaS revenue from licensing the Genesis Engine technology to traditional studios and ad agencies.
+                                            Optional tiers: Base ($4.99/mo) and Creator Pro ($19.99/mo) for enhanced tools.
                                         </p>
                                     </div>
                                 </div>
