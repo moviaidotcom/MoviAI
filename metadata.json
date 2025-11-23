@@ -1,0 +1,7 @@
+{
+  "name": "MoviAI - Decentralized Cinema",
+  "description": "A decentralized entertainment platform combining Web3 infrastructure, generative AI, and community governance.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
